@@ -1,4 +1,3 @@
-import {data} from "./data";
 import {tab} from "./priceTable";
 import GraphService from "./graph.service";
 
