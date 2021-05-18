@@ -5,6 +5,7 @@ import * as winston from "winston";
 import * as expressWinston from "express-winston";
 import cors from "cors";
 import {CommonRoutesConfig} from "./common/common.routes.config";
+import {CyclePathRoutes} from "./cyclePath/cycle-path.routes.config";
 import {GraphRoutes} from "./graph/graph.routes.config";
 import {MHDRoutes} from "./MHD/MHD.routes.config";
 import {ParkingRoutes} from "./parking/parking.routes.config";
@@ -54,6 +55,7 @@ routes.push(new StreetsRoutes(app));
 routes.push(new ParkingRoutes(app));
 routes.push(new MHDRoutes(app));
 routes.push(new GraphRoutes(app));
+routes.push(new CyclePathRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 app.get('/', (req: express.Request, res: express.Response) => {

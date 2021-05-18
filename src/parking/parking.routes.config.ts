@@ -12,13 +12,15 @@ export class ParkingRoutes extends CommonRoutesConfig {
 
         this.app.route(`/Parking`)
             .get(async (req: express.Request, res: express.Response) => {
-                const data = await ParkingService.getParkomatyInCircle([14.455354802000045, 50.122601872000075], 500);
+                const data = await ParkingService
+                    .getParkomatyInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
                 res.status(200).send(data);
             });
 
         this.app.route(`/Parking/All`)
             .get(async (req: express.Request, res: express.Response) => {
-                const data = await ParkingService.getAllInCircle([14.455354802000045, 50.122601872000075], 100);
+                const data = await ParkingService
+                    .getAllInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
                 res.status(200).send(data);
             });
         this.app.route(`/Parking/:parkingId`)
@@ -34,6 +36,34 @@ export class ParkingRoutes extends CommonRoutesConfig {
                 data = JSON.parse(data);
                 res.status(200).send(data);
                 // res.status(200).send(ParkingService.getById);
+            });
+
+        this.app.route(`/ZTP`)
+            .get(async (req: express.Request, res: express.Response) => {
+                const data = await ParkingService
+                    .getZTPInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
+            });
+
+        this.app.route(`/ZakazStani`)
+            .get(async (req: express.Request, res: express.Response) => {
+                const data = await ParkingService
+                    .getZakazStaniInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
+            });
+
+        this.app.route(`/placene_parkovani`)
+            .get(async (req: express.Request, res: express.Response) => {
+                const data = await ParkingService
+                    .getZonesInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
+            });
+
+        this.app.route(`/parkingLot`)
+            .get(async (req: express.Request, res: express.Response) => {
+                const data = await ParkingService
+                    .getParkingInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
             });
 
         return this.app;

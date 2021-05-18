@@ -14,9 +14,14 @@ class StreetsService {
         return MongoService.getById(id, this.collName);
     }
 
-    public async getStreetInCircle(lan, lat, radius) {
-        const filtr = null; // TODO dodefinovat
+    public async getStreetsInCircle(coordinates, radius) {
+        const filtr = MongoService.getNearByFilter(coordinates, 0, radius);
         return MongoService.getMany(filtr, this.collName);
+    }
+
+    public async getpesiInCircle(coordinates, radius) {
+        const filtr = MongoService.getNearByFilter(coordinates, 0, radius);
+        return MongoService.getMany(filtr, 'pesi');
     }
 }
 

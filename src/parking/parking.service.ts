@@ -6,7 +6,7 @@ class ParkingService {
     private collParkomaty = "parkomaty";
     private collStaniZTP = "stani_ZTP";
     private collZakazStani = "zakaz_stani";
-    private collZones = "parking";
+    private collZones = "placene_parkovani";
 
     // parking lot
     public async getParkingById(id: string) {

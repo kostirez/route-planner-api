@@ -19,21 +19,26 @@ class MongoService {
     public async getById(id: string, coll: string) {
         const collection = this.db.collection(coll);
         const o_id = new ObjectID(id);
+        console.log('o_id', o_id);
         const data = await collection.findOne({_id: o_id});
-        console.log(data);
+        // console.log(data);
         return data;
     }
 
-    public async getOne(filtr: {}, coll: string) {
+    public async getOne(filter: {}, coll: string) {
+        // console.log("filter", filter);
+        // console.log("coll", coll);
         const collection = this.db.collection(coll);
-        const data = await collection.findOne(filtr);
-        console.log(data);
+        // console.log("coll", coll);
+        const data = await collection.findOne(filter);
+        // console.log("data", data);
         return data;
     }
 
-    public async getMany(filtr, coll: string) {
+    public async getMany(filter, coll: string) {
         const collection = this.db.collection(coll);
-        return collection.find(filtr).toArray();
+        // console.log('ted');
+        return collection.find(filter).toArray();
     }
 
     private async runMongo() {
@@ -61,11 +66,11 @@ class MongoService {
                     $near:
                         {
                             $geometry: {type: "Point", coordinates: coor},
+                            $maxDistance: maxDist,
                             $minDistance: minDist,
-                            $maxDistance: maxDist
-                        }
-                }
-        }
+                        },
+                },
+        };
     }
 
 }

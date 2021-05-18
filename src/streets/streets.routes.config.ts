@@ -10,8 +10,10 @@ export class StreetsRoutes extends CommonRoutesConfig {
     configureRoutes() {
 
         this.app.route(`/streets`)
-            .get((req: express.Request, res: express.Response) => {
-                res.status(200).send(`List of streets`);
+            .get(async (req: express.Request, res: express.Response) => {
+                const data = await StreetsService
+                    .getStreetsInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
             });
 
         this.app.route(`/streets/:streetId`)
@@ -27,6 +29,14 @@ export class StreetsRoutes extends CommonRoutesConfig {
                 res.status(200).send(data);
                 // res.status(200).send(StreetsService.getById);
             });
+
+        this.app.route(`/pesi`)
+            .get(async (req: express.Request, res: express.Response) => {
+                const data = await StreetsService
+                    .getpesiInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
+            });
+
 
         return this.app;
     }
