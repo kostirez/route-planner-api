@@ -2,7 +2,8 @@ import {MongoClient, ObjectID} from "mongodb";
 
 class MongoService {
 
-    public mongoUrl: string = "mongodb+srv://test:test@cluster0.uniyp.mongodb.net/test?retryWrites=true&w=majority";
+    // public mongoUrl: string = "mongodb+srv://test:test@cluster0.uniyp.mongodb.net/test?retryWrites=true&w=majority";
+    public mongoUrl: string = "mongodb://admin:Letadlo@193.86.103.229:27017/?authSource=admin";
 
     private db;
 
@@ -37,7 +38,7 @@ class MongoService {
 
     public async getMany(filter, coll: string) {
         const collection = this.db.collection(coll);
-        // console.log('ted');
+        // console.log('filtr', filter);
         return collection.find(filter).toArray();
     }
 

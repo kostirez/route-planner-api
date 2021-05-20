@@ -11,25 +11,25 @@ class GraphController {
         // console.log('bike', coords);
         console.log('get request', transportType);
         // console.log('to', to);
-        if (!transportType) {
-            console.log('fail');
-            return;
-        }
-        const coords = await this.findNearest(from, 'bike');
-        console.log('coords', coords);
-        const bike = await GraphService.getNearestNode(coords);
+        // if (!transportType) {
+        //     console.log('fail');
+        //     return;
+        // }
+        // const coords = await this.findNearest(from, 'bike');
+        // console.log('coords', coords);
+        // const bike = await GraphService.getNearestNode(coords);
         const start = await GraphService.getNearestNode(from);
         const end = await GraphService.getNearestNode(to);
-
-        if (transportType === 'shareBike') {
-            console.log('bike', bike);
-            const toBike = await this.findPath(start, bike, 'walk');
-            const toEnd = await this.findPath(bike, end, 'bike');
-            console.log('return', toBike.concat(toEnd));
-            return toBike.concat(toEnd);
-        } else {
-            return await this.findPath(start, end, transportType);
-        }
+        //
+        // if (transportType === 'shareBike') {
+        //     console.log('bike', bike);
+        //     const toBike = await this.findPath(start, bike, 'walk');
+        //     const toEnd = await this.findPath(bike, end, 'bike');
+        //     console.log('return', toBike.concat(toEnd));
+        //     return toBike.concat(toEnd);
+        // } else {
+        return await this.findPath(start, end, transportType);
+        // }
         //
         // // console.log("start", start);
         // // console.log("end", end);
