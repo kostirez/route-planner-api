@@ -35,10 +35,10 @@ class GraphService {
                         {
                             $geometry: {type: "Point", coordinates: coords},
                             $minDistance: 0,
-                            $maxDistance: 50000,
+                            $maxDistance: 1000,
                         },
                 },
-        };
+        }
         return MongoService.getOne(filter, this.collNodes);
     }
 
@@ -60,6 +60,8 @@ class GraphService {
         // console.log('filter', filter);
         return await MongoService.getOne(filter, this.collLinks);
     }
+
+
 }
 
 export default new GraphService();
