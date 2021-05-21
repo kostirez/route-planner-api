@@ -65,53 +65,38 @@ class GraphController {
     }
 
     private async findPath(start: any, end: any, transportType: string) {
-
         // Inicializují se 2 prázdné listy.
         const openList = [];  // ukladání otevřených uzlů z kterých probíhá vyhledávání
         const closeList = []; // uzavřené uzly kterými již algoritmus prošel
 
         start.g = 0; // nastavení hodnoty cesty do startovního budu na nulu
         openList.push(start); // do openlistu je vložen počáteční uzel.
-
         // poběží dokud není nalezen koncový uzel
         while (true) {
-            // for (let i = 0; i < 120; i++) {
             // Nalezení nejlepšího uzlu mezi otevřenými uzly a následné přesunutí mezi uzavřené
             const currentNodeId = await this.findBestNodeId(openList);
             const currentNode = openList[currentNodeId];
             openList.splice(currentNodeId, 1);
             closeList.push(currentNode);
-            console.log("ted");
             // je nalezený uzel koncový?
             if (String(end._id) === String(currentNode._id)) {
-                console.log('found');
                 break;  // ukončí vyhledávání
             }
             // nalezne okolní uzly do kterých vede cesta z currentNode
             const adjacantNodes = await this.findNextNodes(currentNode);
-
             // cyklus skrz všechny nalezený sousedy
             for (const node of adjacantNodes) {
-
                 // pokud je uzel již uzavřený jde se na dalšího
                 if (this.includeNode(closeList, node)) {
                     continue;
                 }
-
-                // const price = await this.pathPrice(node, currentNode);
-                // výpočet hodnot uzlu
+               // výpočet hodnot uzlu
                 // g = nejkratší vzdálenost po cestách z počátečního uzlu
                 // h = vzdušná vzdálenos uzlu od koncovéhoo uzlu
                 node.g = currentNode.g + await this.pathPrice(currentNode, node, transportType);
                 node.h = this.calculateDist(end.coords, node.coords);
                 node.f = node.g + node.h;
                 node.parrentId = currentNode._id;
-                // console.log('g', node.g);
-                // console.log('h', node.h);
-                // console.log('f', node.f);
-
-                // is in openList
-                // console.log('check open list');
                 // pokud je jiz v uzel v openlist a zaroven do nej vede
                 // kratsi cesta nez v tomto pripade, je uzel zahozen.
                 // v opacnem pripade je  pridán do openlistu
@@ -120,9 +105,7 @@ class GraphController {
                     // is it better than a current node in openList?
                     const foundNode = openList.find((n) => String(n._id) === String(node._id));
                     if (node.g > foundNode.g) {
-                        // console.log('includde2');
                         continue;
-                        // return;
                     } else {
                         const index = openList.findIndex((n) => String(n._id) === String(node._id));
                         openList.splice(index, 1);
@@ -133,53 +116,21 @@ class GraphController {
                 }
             }
         }
-        // console.log('closelist', closeList.map((node) => {
-        //     return {id: node.id, f: node.parrentId};
-        // }));
-        // console.log('openlist', openList.map((node) => {
-        //     return {id: node.id, f: node.parrentId};
-        // }));
-
-        // return closeList.map((node) => {
-        //     return {
-        //         "type": "Feature",
-        //         "geometry": {
-        //             "type": "Point",
-        //             "coordinates": node.coords,
-        //         },
-        //         "properties": {},
-        //     };
-        // });
 
         let current = closeList[closeList.length - 1];
-
-        // return closeList;
         const route = [];
         while (String(current._id) !== String(closeList[0]._id)) {
             route.push(current._id);
-            //     {
-            //     "type": "Feature",
-            //     "geometry": {
-            //         "type": "Point",
-            //         "coordinates": current.coords,
-            //     },
-            //     "properties": {},
-            // }
-
             const next = closeList.find((n) => String(n._id) === String(current.parrentId));
             current = next;
         }
-        // console.log('route len: ', route.length);
-        // console.log('closeList len: ', closeList.length);
         const links = [];
-
         for (let i = 0; i < route.length - 1; i++) {
             // console.log(route[i]);
             const link = await this.getLink(route[i], route[i + 1]);
             link.properties.transportType = transportType;
             links.push(link);
         }
-
         return links;
     }
 
@@ -194,7 +145,6 @@ class GraphController {
             }
             i++;
         });
-        // console.log("index", index);
         return index;
     }
 
