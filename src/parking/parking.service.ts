@@ -15,6 +15,8 @@ class ParkingService {
 
     public async getParkingInCircle(coordinates, radius) {
         const filtr = MongoService.getNearByFilter(coordinates, 0, radius);
+        console.log('filtr', filtr);
+        console.log('coll', this.collParking);
         return MongoService.getMany(filtr, this.collParking);
     }
 
@@ -55,6 +57,8 @@ class ParkingService {
 
     public async getParkomatyInCircle(coordinates, radius) {
         const filtr = MongoService.getNearByFilter(coordinates, 0, radius);
+        console.log('filtr', filtr);
+        console.log('coll', this.collParkomaty);
         return MongoService.getMany(filtr, this.collParkomaty);
     }
 

@@ -10,15 +10,28 @@ export class MHDRoutes extends CommonRoutesConfig {
 
     configureRoutes() {
 
-        this.app.route(`/MHD`)
+        this.app.route(`/MHDStops`)
             .get(async (req: express.Request, res: express.Response) => {
-                const data = await MHDService.getStopsInCircle([14.455354802000045, 50.122601872000075], 500);
+                const data = await MHDService.getStopsInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
                 res.status(200).send(data);
             });
 
-        this.app.route(`/MHD/All`)
+        this.app.route(`/metro`)
             .get(async (req: express.Request, res: express.Response) => {
-                const data = await MHDService.getStopsInCircle([14.455354802000045, 50.122601872000075], 1000);
+                console.log('metro');
+                const data = await MHDService.getMetroInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
+            });
+        this.app.route(`/tram`)
+            .get(async (req: express.Request, res: express.Response) => {
+                console.log('tram');
+                const data = await MHDService.getTramInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
+                res.status(200).send(data);
+            });
+        this.app.route(`/bus`)
+            .get(async (req: express.Request, res: express.Response) => {
+                console.log('bus');
+                const data = await MHDService.getBusInCircle([+req.query.coordinates1, +req.query.coordinates2], +req.query.radius);
                 res.status(200).send(data);
             });
         // this.app.route(`/MHD/:MHDId`)

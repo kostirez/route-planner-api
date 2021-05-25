@@ -7,10 +7,10 @@ export const tab = [
     {
         bike: 1,
         car: 1,
-        walk: 100,
+        walk: 10,
     },
     {
-        bike: 2,
+        bike: 1.1,
         car: 1,
         walk: 1,
     },
@@ -29,7 +29,7 @@ export const tab = [
         car: 1,
         walk: 10,
     },
-    {
+    { // 6
         bike: 100,
         car: 100,
         walk: 1,
@@ -46,27 +46,27 @@ export const tab = [
     },
     {
         bike: 1.5,
-        car: 1,
-        walk: 3,
+        car: 1.5,
+        walk: 1,
     },
     {
         bike: 5,
         car: 1000,
         walk: 1.2,
     },
-    {
+    { // 11
         bike: 1,
         car: 1,
         walk: 10,
     },
     {
         bike: 1,
-        car: 0.5,
+        car: 0.9,
         walk: 100,
     },
     { //13 Víceproud  kom.se stř.děl.pás.
         bike: 1,
-        car: 0.5,
+        car: 0.9,
         walk: 20,
     },
     {
@@ -74,7 +74,7 @@ export const tab = [
         car: 1,
         walk: 1,
     },
-    {
+    { // 15
         bike: 2,
         car: 3,
         walk: 1,
@@ -89,7 +89,7 @@ export const tab = [
         car: 1,
         walk: 100,
     },
-    {
+    { // 18 Podchod
         bike: 1.2,
         car: 0,
         walk: 1,
@@ -104,7 +104,7 @@ export const tab = [
         car: 1,
         walk: 100,
     },
-    {
+    { // 21 Přejezd křižovatky
         bike: 1,
         car: 1,
         walk: 3,
@@ -119,7 +119,7 @@ export const tab = [
         car: 1,
         walk: 100,
     },
-    {
+    { // 24
         bike: 2,
         car: 100,
         walk: 1,

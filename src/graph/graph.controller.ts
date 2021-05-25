@@ -7,7 +7,6 @@ class GraphController {
 
     public async getRoute(from: [number, number], to: [number, number], transportType: string) {
 
-
         // console.log('bike', coords);
         console.log('get request', transportType);
         // console.log('to', to);
@@ -36,7 +35,7 @@ class GraphController {
         //
     }
 
-    private findNearest(coords: [number, number], type: string): Promise<[number,number]> {
+    private findNearest(coords: [number, number], type: string): Promise<[number, number]> {
         return new Promise<[number, number]>((resolve, reject) => {
             console.log('coords', coords);
             request({
@@ -51,7 +50,7 @@ class GraphController {
                 }
             }, (error, response, body) => {
                 let ret = JSON.parse(body);
-                if (!ret.features || ret.features.length === 0){
+                if (!ret.features || ret.features.length === 0) {
                     console.log('not found:');
                     reject('error');
                     return;
@@ -90,7 +89,7 @@ class GraphController {
                 if (this.includeNode(closeList, node)) {
                     continue;
                 }
-               // výpočet hodnot uzlu
+                // výpočet hodnot uzlu
                 // g = nejkratší vzdálenost po cestách z počátečního uzlu
                 // h = vzdušná vzdálenos uzlu od koncovéhoo uzlu
                 node.g = currentNode.g + await this.pathPrice(currentNode, node, transportType);
@@ -125,6 +124,7 @@ class GraphController {
             current = next;
         }
         const links = [];
+        // links.push(this.getNewLink())
         for (let i = 0; i < route.length - 1; i++) {
             // console.log(route[i]);
             const link = await this.getLink(route[i], route[i + 1]);
@@ -148,6 +148,17 @@ class GraphController {
         return index;
     }
 
+    getNewLink(start, end) {
+        return {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [start, end],
+            },
+            "properties": {},
+        };
+    }
+
     private async pathPrice(first, second, transportType: string): Promise<number> {
         // database find link...
 
@@ -162,11 +173,11 @@ class GraphController {
 
             // console.log('smer: ', path.properties.SMEROVOST);
             // console.log('exist', first.coords[1], path.geometry.coordinates[0][1]);
-            if (first.coords[1] === path.geometry.coordinates[0][1] && path.properties.SMEROVOST === 2) {
+            if (first.coords[1] === path.geometry.coordinates[0][1] && path.properties.SMEROVOST === 1) {
                 // console.log('exist21');
                 multiplier = 100000;
             } else {
-                if (second.coords[1] === path.geometry.coordinates[0][1] && path.properties.SMEROVOST === 1) {
+                if (second.coords[1] === path.geometry.coordinates[0][1] && path.properties.SMEROVOST === 2) {
                     // console.log('exist22');
                     multiplier = 100000;
                 }
@@ -174,7 +185,7 @@ class GraphController {
         }
         // const key = "bike";
         // console.log('tab', tab);
-        const price = path.properties.Shape_Length * 12000 * multiplier;
+        const price = path.properties.Shape_Length * 10000 * multiplier;
         // console.log('multi: ', multiplier);
         // console.log('PRICE: ', price);
         return price;
