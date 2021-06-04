@@ -72,6 +72,7 @@ class GraphController {
         openList.push(start); // do openlistu je vložen počáteční uzel.
         // poběží dokud není nalezen koncový uzel
         while (true) {
+            console.log('ted');
             // Nalezení nejlepšího uzlu mezi otevřenými uzly a následné přesunutí mezi uzavřené
             const currentNodeId = await this.findBestNodeId(openList);
             const currentNode = openList[currentNodeId];
@@ -99,6 +100,7 @@ class GraphController {
                 // pokud je jiz v uzel v openlist a zaroven do nej vede
                 // kratsi cesta nez v tomto pripade, je uzel zahozen.
                 // v opacnem pripade je  pridán do openlistu
+                console.log('ted1');
                 if (this.includeNode(openList, node)) {
                     // console.log('includde1');
                     // is it better than a current node in openList?
@@ -115,6 +117,7 @@ class GraphController {
                 }
             }
         }
+
 
         let current = closeList[closeList.length - 1];
         const route = [];
@@ -167,6 +170,7 @@ class GraphController {
         // data.links.find((link) => link.nodes.includes(first.id)
         // && link.nodes.includes(second.id));
         // console.log('trans: ', transportType);
+        console.log('typ', path.properties.TYPKOMUNIK);
         let multiplier = tab[path.properties.TYPKOMUNIK][transportType];
 
         if (path.properties.SMEROVOST) {
@@ -202,16 +206,16 @@ class GraphController {
         // console.log('end price', endPrice);
         // console.log('currentPrice', currentPrice);
 
-        const R = 6371e3; // metres
-        const fi1 = end[1] * Math.PI / 180; // φ, λ in radians
-        const fi2 = current[1] * Math.PI / 180;
-        const deltaFi = (current[1] - end[1]) * Math.PI / 180;
-        const deltaPsi = (current[0] - end[0]) * Math.PI / 180;
-        const a = Math.sin(deltaFi / 2) * Math.sin(deltaFi / 2) +
-            Math.cos(fi1) * Math.cos(fi2) *
-            Math.sin(deltaPsi / 2) * Math.sin(deltaPsi / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c; // in metres
+            const R = 6371e3; // metres
+            const fi1 = end[1] * Math.PI / 180; // φ, λ in radians
+            const fi2 = current[1] * Math.PI / 180;
+            const deltaFi = (current[1] - end[1]) * Math.PI / 180;
+            const deltaPsi = (current[0] - end[0]) * Math.PI / 180;
+            const a = Math.sin(deltaFi / 2) * Math.sin(deltaFi / 2) +
+                Math.cos(fi1) * Math.cos(fi2) *
+                Math.sin(deltaPsi / 2) * Math.sin(deltaPsi / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // in metres
 
         // return Math.abs(endPrice - currentPrice);
     }
