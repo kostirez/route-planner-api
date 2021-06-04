@@ -11,6 +11,10 @@ export class GraphRoutes extends CommonRoutesConfig {
     public configureRoutes() {
         this.app.route(`/Graph`)
             .get(async (req: express.Request, res: express.Response) => {
+                if (req.method === "OPTIONS") {
+                    res.writeHead(200, {"Content-Type": "application/json"});
+                    res.end();
+                }
                 try {
                     const stringFrom = req.query.from as string;
                     const stringTo = req.query.to as string;
